@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="operation_tree_view" model="ir.ui.view">
+        <field name="name">hospital.operation.tree</field>
+        <field name="model">hospital.operation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id"/>
+                <field name="gender"/>
+                <field name="doctor_id"/>
+                <field name="booking_date"/>
+                <field name="operation_date"/>
+                <field name="operation_type"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="operation_form_view" model="ir.ui.view">
+        <field name="name">hospital.operation.form</field>
+        <field name="model">hospital.operation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="gender"/>
+                            <field name="doctor_id"/>
+                            <field name="reference_record"/>
+                        </group>
+                        <group>
+                            <field name="booking_date"/>
+                            <field name="operation_date"/>
+                            <field name="operation_type"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_menu_operation" model="ir.actions.act_window">
+        <field name="name">Operation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.operation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                <!-- Add Text Here -->
+                Create New Operation
+
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="menu_operation"
+              name="Operations"
+              parent="menu_lab_root"
+              action="action_menu_operation"
+              sequence="0"/>
+
+</odoo>

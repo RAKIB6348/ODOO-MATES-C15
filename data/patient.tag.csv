@@ -1,0 +1,4 @@
+id,name
+patient_tag_ceo,CEO,True
+patient_tag_manager,MANAGER, True
+patient_tag_staff,STAFF,True
