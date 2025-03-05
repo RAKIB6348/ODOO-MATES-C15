@@ -78,6 +78,13 @@ class HospitalAppointment(models.Model):
     def action_confirm(self):
         for rec in self:
             rec.state = 'confirm'
+            return {
+                'effect': {
+                    'fadeout': 'slow',
+                    'message': 'Appointment Confirm Successfully',
+                    'type': 'rainbow_man',
+                }
+            }
 
     def action_approve(self):
         self.state = 'approve'
@@ -91,16 +98,14 @@ class HospitalAppointment(models.Model):
     def onchange_patient_id(self):
         self.ref = self.patient_id.ref
 
-    # rainbow effect
+    # url action
     def action_test(self):
-        print('Button Clicked')
         return {
-            'effect': {
-                'fadeout': 'slow',
-                'message': 'Button Clicked Successfully',
-                'type': 'rainbow_man',
-            }
+            'type': 'ir.actions.act_url',
+            'url': 'https://www.odoo.com/',
+            'target': 'new',
         }
+
 
 
 class AppointmentPharmacyLines(models.Model):
