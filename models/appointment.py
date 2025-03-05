@@ -40,6 +40,9 @@ class HospitalAppointment(models.Model):
     progress = fields.Integer(string='Progress', compute='_compute_progress')
     duration = fields.Float(string='Duration')
 
+    # currency add
+    company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
+    currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string='Currency')
 
     @api.depends('state')
     def _compute_progress(self):
@@ -75,6 +78,7 @@ class HospitalAppointment(models.Model):
     def action_draft(self):
         self.state = 'draft'
 
+    # rainbow affect
     def action_confirm(self):
         for rec in self:
             rec.state = 'confirm'
@@ -102,7 +106,7 @@ class HospitalAppointment(models.Model):
     def action_test(self):
         return {
             'type': 'ir.actions.act_url',
-            'url': 'https://www.odoo.com/',
+            'url': 'https://github.com/RAKIB6348',
             'target': 'new',
         }
 
@@ -116,3 +120,11 @@ class AppointmentPharmacyLines(models.Model):
     price = fields.Float(string='Price')
     qty = fields.Integer(string='Quantity')
     appointment_id = fields.Many2one('hospital.appointment', string='Appointment')
+    currency_id = fields.Many2one('res.currency', related='appointment_id.currency_id')
+    price_subtotal = fields.Monetary(string='Total', compute='_compute_price_subtotal')
+
+
+    @api.depends('price','qty')
+    def _compute_price_subtotal(self):
+        for rec in self:
+            rec.price_subtotal = rec.price * rec.qty
