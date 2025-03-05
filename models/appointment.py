@@ -110,6 +110,10 @@ class HospitalAppointment(models.Model):
             'target': 'new',
         }
 
+    # whatsappp intregetion
+    def action_share_whatsapp(self):
+        return
+
 
 
 class AppointmentPharmacyLines(models.Model):
@@ -122,9 +126,15 @@ class AppointmentPharmacyLines(models.Model):
     appointment_id = fields.Many2one('hospital.appointment', string='Appointment')
     currency_id = fields.Many2one('res.currency', related='appointment_id.currency_id')
     price_subtotal = fields.Monetary(string='Total', compute='_compute_price_subtotal')
+    amount_total = fields.Float(string='Total Amount', compute='_compute_amount_total')
 
 
     @api.depends('price','qty')
     def _compute_price_subtotal(self):
         for rec in self:
             rec.price_subtotal = rec.price * rec.qty
+
+    @api.depends('appointment_id.pharmacy_lines_ids.price_subtotal')
+    def _compute_amount_total(self):
+        for rec in self:
+            rec.amount_total = sum(rec.appointment_id.pharmacy_lines_ids.mapped('price_subtotal'))
