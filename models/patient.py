@@ -120,7 +120,15 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     so_confirmed_user_id = fields.Many2one('res.users',string='So Confirmed User')
+
     
     def action_post(self):
         self.so_confirmed_user_id = self.env.user.id
         super(AccountMove, self).action_post()
+
+
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    create_date = fields.Date(string='Date')
