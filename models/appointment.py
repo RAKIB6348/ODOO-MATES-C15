@@ -2,6 +2,7 @@ from odoo import api, fields, models, _
 from odoo.fields import date
 from odoo.fields import datetime
 from odoo.exceptions import ValidationError
+from urllib.parse import quote
 import random
 
 
@@ -111,9 +112,49 @@ class HospitalAppointment(models.Model):
         }
 
     # whatsappp intregetion
-    def action_share_whatsapp(self):
-        return
+    # def action_share_whatsapp(self):
+    #     if not self.patient_id.phone:
+    #         raise ValidationError(_('Missing Phone number in patient record'))
+    #     txt = 'Hi %s your appointment number is : %s ,Thank You' % (self.patient_id.name,self.sl_no)
+    #     whatsapp_api_url = 'https://web.whatsapp.com/send?phone=%s&text=%s' % (self.patient_id.phone,txt)
+    #     return {
+    #         'type': 'ir.actions.act_url',
+    #         'url': whatsapp_api_url,
+    #         'target': 'new',
+    #     }
 
+    # def action_share_whatsapp(self):
+    #     if not self.patient_id.phone:
+    #         raise ValidationError(_('Missing Phone number in patient record'))
+    #
+    #     # মেসেজ তৈরি ও URL Encode করা
+    #     message = "Hi %s, your appointment number is: %s. Thank you!" % (self.patient_id.name, self.sl_no)
+    #
+    #     # WhatsApp API URL তৈরি
+    #     whatsapp_api_url = "https://api.whatsapp.com/send?phone=%s&text=%s" % (self.patient_id.phone, message)
+    #
+    #     return {
+    #         'type': 'ir.actions.act_url',
+    #         'url': whatsapp_api_url,
+    #         'target': 'new',
+    #     }
+
+    def action_share_whatsapp(self):
+        if not self.patient_id.phone:
+            raise ValidationError(_('Missing Phone number in patient record'))
+
+        # মেসেজ তৈরি ও URL Encode করা
+        message = "Hi %s, your appointment number is: %s. Thank you!" % (self.patient_id.name, self.sl_no)
+        encoded_message = quote(message)  # মেসেজকে Encode করা
+
+        # WhatsApp Web API URL তৈরি
+        whatsapp_api_url = "https://api.whatsapp.com/send?phone=%s&text=%s" % (self.patient_id.phone, encoded_message)
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': whatsapp_api_url,
+            'target': 'new',
+        }
 
 
 class AppointmentPharmacyLines(models.Model):

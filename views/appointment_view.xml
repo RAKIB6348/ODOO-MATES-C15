@@ -95,7 +95,7 @@
                     <button name="action_confirm" string="Confirm" type="object" states="draft" class="oe_highlight"/>
                     <button name="action_approve" string="Approve" type="object" states="confirm" class="oe_highlight"/>
                     <button name="action_cancel" string="Cancel" type="object"/>
-                    <button name="action_share_whatsapp" string="Whatsapp" type="object" class="oe_highlight" icon="fa-whatsapp"/>
+                    <button name="action_share_whatsapp" string="Whatsapp" type="object" class="btn-success" icon="fa-whatsapp"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,approve"/>
                 </header>
                 <sheet>
