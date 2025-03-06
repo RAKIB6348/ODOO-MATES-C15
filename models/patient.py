@@ -108,3 +108,10 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         self.confirmed_user = self.env.user.id
         super(SaleOrder, self).action_confirm()
+
+
+
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    so_confirmed_user_id = fields.Many2one('res.users',string='So Confirmed User')
