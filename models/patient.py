@@ -109,9 +109,18 @@ class SaleOrder(models.Model):
         self.confirmed_user = self.env.user.id
         super(SaleOrder, self).action_confirm()
 
+    def _prepare_invoice(self):
+        invoice = super(SaleOrder, self)._prepare_invoice()
+        invoice['so_confirmed_user_id'] = self.confirmed_user.id
+        return invoice
+
 
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
     so_confirmed_user_id = fields.Many2one('res.users',string='So Confirmed User')
+    
+    def action_post(self):
+        self.so_confirmed_user_id = self.env.user.id
+        super(AccountMove, self).action_post()
