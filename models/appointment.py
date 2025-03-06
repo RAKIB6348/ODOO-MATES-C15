@@ -2,7 +2,6 @@ from odoo import api, fields, models, _
 from odoo.fields import date
 from odoo.fields import datetime
 from odoo.exceptions import ValidationError
-from urllib.parse import quote
 import random
 
 
@@ -162,10 +161,10 @@ class HospitalAppointment(models.Model):
 
         # মেসেজ তৈরি ও URL Encode করা
         message = "Hi %s, your appointment number is: %s. Thank you!" % (self.patient_id.name, self.sl_no)
-        encoded_message = quote(message)  # মেসেজকে Encode করা
 
         # WhatsApp Web API URL তৈরি
-        whatsapp_api_url = "https://api.whatsapp.com/send?phone=%s&text=%s" % (self.patient_id.phone, encoded_message)
+        whatsapp_api_url = "https://api.whatsapp.com/send?phone=%s&text=%s" % (self.patient_id.phone, message)
+        self.message_post(body=message, subject='Patient Appointment Record')
 
         return {
             'type': 'ir.actions.act_url',
