@@ -111,6 +111,19 @@ class HospitalAppointment(models.Model):
             'target': 'new',
         }
 
+
+    def action_notification(self):
+        message = "Connection Test Successful!"
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'message': message,
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+
     # whatsappp intregetion
     # def action_share_whatsapp(self):
     #     if not self.patient_id.phone:

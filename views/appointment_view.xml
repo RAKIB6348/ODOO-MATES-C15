@@ -124,6 +124,7 @@
                             <button name="%(odoo_tutorials.action_menu_patient)d" string="Action Button" type="action"
                                     class="btn-primary"/>
                             <button name="action_test" string="Test Button" type="object" class="btn-primary"/>
+                            <button name="action_notification" string="Display Notification" type="object" class="btn-primary"/>
                         </group>
                     </group>
                     <notebook>
