@@ -113,15 +113,19 @@ class HospitalAppointment(models.Model):
 
 
     def action_notification(self):
-        message = "Connection Test Successful!"
+        action = self.env.ref('odoo_tutorials.action_menu_patient')
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'message': message,
-                'type': 'success',
-                'sticky': False,
-            }
+                    'title': _('Click to the patient record open!'),
+                    'message': '%s',
+                    'links': [{
+                        'label': self.patient_id.name,
+                        'url': f'#action={action.id}&id={self.patient_id.id}&model=hospital.patient',
+                    }],
+                    'sticky': False,
+                }
         }
 
     # whatsappp intregetion
