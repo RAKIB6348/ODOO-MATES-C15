@@ -132,3 +132,10 @@ class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
     create_date = fields.Date(string='Date')
+
+
+class PartnerCategory(models.Model):
+    _name = 'res.partner.category'
+    _inherit = ['res.partner.category', 'mail.thread']
+
+    name = fields.Char( tracking=True)
